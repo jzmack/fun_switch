@@ -1,13 +1,22 @@
 
 # Set up
 
+Clone repo
+```sh
+git clone git@github.com:jzmack/fun_switch.git
+```
+
+Create virtual env
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 Create .env file
 
 SWITCH_IP=<ip_address>
 SWITCH_USER=<username>
 SWITCH_PASSWORD=<password>
-
-Create virtual env
 
 # Resources
 
