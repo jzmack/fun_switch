@@ -1,5 +1,7 @@
 import sqlite3
 
+DB_FILE = "aos_cx_fun.db"
+
 def create_insert_statements(all_int_stats:list[dict]) -> list[str]:
     sql_insert_statements:list[str] = []
     for interface in all_int_stats:
@@ -24,6 +26,9 @@ def create_insert_statements(all_int_stats:list[dict]) -> list[str]:
         sql_insert_statements.append(insert_statement)
     return sql_insert_statements
 
-def insert_to_db(insert_list:list[str]):
-    for insert_statement in insert_list:
-        print(insert_statement)
+def send_inserts(insert_list:list[str]):
+    with sqlite3.connect(DB_FILE) as conn:
+        cursor = conn.cursor()
+        for insert_statement in insert_list:
+            cursor.execute(insert_statement)
+        conn.commit()

@@ -4,7 +4,7 @@ from base_functions import create_auth_session, get_data, close_session
 from load_environment import load_environment
 from parsing_functions import parse_current_firmware, parse_interface_data
 from custom_functions import get_interface_data
-from sql_functions import create_insert_statements
+from sql_functions import create_insert_statements, send_inserts
 
 def main():
     SWITCH_IP, SWITCH_USER, SWITCH_PASS = load_environment()
@@ -17,7 +17,8 @@ def main():
 
         interface_data = get_interface_data(session, SWITCH_IP)
         int_stats_list = parse_interface_data(interface_data)
-        create_insert_statements(int_stats_list)
+        insert_statements = create_insert_statements(int_stats_list)
+        send_inserts(insert_statements)
 
     finally:
         close_session(session, SWITCH_IP)
