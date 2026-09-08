@@ -28,4 +28,10 @@ def parse_interface_data(interface_json:dict):
             print(f"Received KB: {rx_bytes_kb:.2f}")
             print(f"Received MB: {rx_bytes_mb:.2f}")
             print(f"Received GB: {rx_bytes_gb:.2f}")
+
+        if "utilization" not in value["rate_statistics"]:
+           print(f"Utilization is 0%") 
+        else:
+            utilization = value["rate_statistics"]["utilization"]
+            print(f"Utilization: {utilization:.2f}%")
     return
