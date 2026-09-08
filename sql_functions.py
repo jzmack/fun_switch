@@ -1,3 +1,5 @@
+import sqlite3
+
 def create_insert_statements(all_int_stats:list[dict]) -> list[str]:
     sql_insert_statements:list[str] = []
     for interface in all_int_stats:
@@ -23,4 +25,5 @@ def create_insert_statements(all_int_stats:list[dict]) -> list[str]:
     return sql_insert_statements
 
 def insert_to_db(insert_list:list[str]):
-    pass
+    for insert_statement in insert_list:
+        print(insert_statement)

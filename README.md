@@ -1,6 +1,13 @@
 # Project
 
-This is a fun project aimed at learning more about the RESTful interactions with an Aruba AOS-CX switch (running version 10.13). I will be using it to gather data about the switch for custom graphs and dashboards.
+This is a fun project aimed at learning more about the RESTful interactions with an Aruba AOS-CX switch. I will be using it to gather data about the switch for custom graphs and dashboards.
+
+# Requirements
+
+Since this is primarily for playing with an Aruba AOS-CX switch, one of those is needed. The one I'm using is a 12-port 6100 switch running version 10.13 code. If I feel like it, I may extend this to use Cisco switches as well, but that would be down the line
+
+- Python3.14 or later (probably works on earlier versions of Python but built with 3.14)
+- time and patience
 
 # Set up
 
@@ -21,6 +28,9 @@ SWITCH_IP=<ip_address>
 SWITCH_USER=<username>
 SWITCH_PASSWORD=<password>
 ```
+
+Run init_db.py to create database file. This will create a SQLite database file named `aox_cx_fun.db` in your working directory.
+
 # Resources
 
 HPE documentation:

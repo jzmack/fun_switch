@@ -4,7 +4,7 @@ import sqlite3
 DB_FILE = "aos_cx_fun.db"
 
 def setup_db():
-
+    """This function is intended to only be ran once during intial set up."""
     with sqlite3.connect(DB_FILE) as conn:
         # WAL is Write-Ahead logging, so we can read/write concurrently
         conn.execute("PRAGMA journal_mode=WAL")
