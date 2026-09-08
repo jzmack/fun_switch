@@ -31,6 +31,13 @@ SWITCH_PASSWORD=<password>
 
 Run init_db.py to create database file. This will create a SQLite database file named `aox_cx_fun.db` in your working directory.
 
+Set up cronjob to run fetch_data.sh every 5 minutes.
+
+Here's mine for example:
+```sh
+*/5 * * * * /home/jzm/workspace/fun_switch/fetch_data.sh
+```
+
 # Resources
 
 HPE documentation:
@@ -40,3 +47,7 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.13/HTML/rest_v10-0x/Content/C
 
 Streamlit docs:
 https://docs.streamlit.io/get-started/fundamentals/main-concepts
+
+Other:
+https://crontab.guru
+https://www.sqlitetutorial.net/sqlite-python/

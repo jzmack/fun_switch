@@ -4,6 +4,7 @@ DB_FILE = "aos_cx_fun.db"
 
 def create_insert_statements(all_int_stats:list[dict]) -> list[str]:
     sql_insert_statements:list[str] = []
+    # wrap the TEXT types(the VALUE for interface in this case) around single ' quotes
     for interface in all_int_stats:
         insert_statement = f"""
         INSERT INTO interface_metrics (
