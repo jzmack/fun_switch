@@ -47,5 +47,4 @@ def parse_interface_data(interface_json:dict) -> list[dict]:
             stats_dict["util_pct"] = round(util_pct, 2) 
             print(f"Utilization: {util_pct:.2f}%")
         all_int_stats.append(stats_dict) 
-    print(all_int_stats)
     return all_int_stats

@@ -17,7 +17,7 @@ def setup_db():
                 interface TEXT,
                 tx_bytes INTEGER,
                 rx_bytes INTEGER,
-                mbps REAL,
+                Bps REAL,
                 util_pct REAL,
                 timestamp TEXT
             );
