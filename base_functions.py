@@ -81,6 +81,10 @@ def get_data(session: requests.Session,
     return json_data
 
 def close_session(session:requests.Session, switch_ip:str):
+    """
+    Function to logout of the switch and close the session.
+    Should always be ran to avoid maxing out HTTP connections (6 max).
+    """
     logout_response = session.post(f"https://{switch_ip}/rest/v10.13/logout", verify=False)
 
     if logout_response.status_code !=200:

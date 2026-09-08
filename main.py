@@ -7,17 +7,18 @@ from custom_functions import get_interface_data
 
 def main():
     SWITCH_IP, SWITCH_USER, SWITCH_PASS = load_environment()
+    try:
+        session = create_auth_session(SWITCH_IP, SWITCH_USER, SWITCH_PASS)
 
-    session = create_auth_session(SWITCH_IP, SWITCH_USER, SWITCH_PASS)
+        firmware_data = get_data(session, SWITCH_IP, "/firmware")
+        current_firmware = parse_current_firmware(firmware_data)
+        print(current_firmware)
 
-    firmware_data = get_data(session, SWITCH_IP, "/firmware")
-    current_firmware = parse_current_firmware(firmware_data)
-    print(current_firmware)
+        interface_data = get_interface_data(session, SWITCH_IP)
+        parse_interface_data(interface_data)
 
-    interface_data = get_interface_data(session, SWITCH_IP)
-    parse_interface_data(interface_data)
-
-    close_session(session, SWITCH_IP)
+    finally:
+        close_session(session, SWITCH_IP)
 
 if __name__ == "__main__":
     main()

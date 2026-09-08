@@ -1,3 +1,6 @@
+# Project
+
+This is a fun project aimed at learning more about the RESTful interactions with an Aruba AOS-CX switch. I will be using it to gather data about the switch for custom graphs and dashboards.
 
 # Set up
 

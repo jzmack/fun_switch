@@ -23,5 +23,9 @@ def parse_interface_data(interface_json:dict):
             print(f"Transmitted KB: {tx_bytes_kb:.2f}")
             print(f"Transmitted MB: {tx_bytes_mb:.2f}")
             print(f"Transmitted GB: {tx_bytes_gb:.2f}")
-            print(f"Recieved bytes: {value["statistics"]["rx_bytes"]}")
+
+            print(f"Received bytes: {value["statistics"]["rx_bytes"]}")
+            print(f"Received KB: {rx_bytes_kb:.2f}")
+            print(f"Received MB: {rx_bytes_mb:.2f}")
+            print(f"Received GB: {rx_bytes_gb:.2f}")
     return

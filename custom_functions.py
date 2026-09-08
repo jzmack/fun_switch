@@ -9,5 +9,9 @@ def get_interface_data(session:requests.Session, switch_ip:str) -> dict:
         "depth":2
     }
 
-    interface_data = get_data(session, switch_ip, interface_endpoint, params=params)
+    headers = {
+        "accept":"application/json"
+    }
+
+    interface_data = get_data(session, switch_ip, interface_endpoint,headers=headers, params=params)
     return interface_data
