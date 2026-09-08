@@ -60,17 +60,25 @@ def create_auth_session(switch_ip:str, username:str, password:str) -> requests.S
     print(f"Successfully logged into {switch_ip} as {username}.")    
     return session
 
-def get_data(session: requests.Session, switch_ip:str, endpoint:str) -> dict:
-    """Used for a GET with no params, headers, payload."""
-    response = session.get(f"https://{switch_ip}/rest/v10.13{endpoint}", verify=False)
+def get_data(session: requests.Session,
+             switch_ip:str,
+             endpoint:str,
+             params=None,
+             headers=None,
+             payload=None) -> dict:
+
+    """Used for HTTP GET requests."""
+
+    response = session.get(f"https://{switch_ip}/rest/v10.13{endpoint}",
+                           params=params,
+                           headers=headers,
+                           json=payload,
+                           verify=False)
     if response.status_code != 200:
         response.raise_for_status()
         return
     json_data = json.loads(response.text)    
     return json_data
-
-def get_custom_data(session: requests.Session, switch_ip:str, params={}, headers={}, payload={}):
-    pass
 
 def close_session(session:requests.Session, switch_ip:str):
     logout_response = session.post(f"https://{switch_ip}/rest/v10.13/logout", verify=False)
