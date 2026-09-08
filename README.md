@@ -1,6 +1,6 @@
 # Project
 
-This is a fun project aimed at learning more about the RESTful interactions with an Aruba AOS-CX switch. I will be using it to gather data about the switch for custom graphs and dashboards.
+This is a fun project aimed at learning more about the RESTful interactions with an Aruba AOS-CX switch (running version 10.13). I will be using it to gather data about the switch for custom graphs and dashboards.
 
 # Set up
 
@@ -23,6 +23,10 @@ SWITCH_PASSWORD=<password>
 ```
 # Resources
 
-HPE API documentation:
+HPE documentation:
+https://arubanetworking.hpe.com/techdocs/AOS-CX/10.13/PDF/rest_v10-0x.pdf
+https://arubanetworking.hpe.com/techdocs/AOS-CX/10.13/PDF/fundamentals_8100-83xx-9300-10000.pdf
+https://arubanetworking.hpe.com/techdocs/AOS-CX/10.13/HTML/rest_v10-0x/Content/Chp_REST_ref/aru-cx-res-api-ref-sum-10.htm
 
-https://support.hpe.com/hpesc/public/docDisplay?docId=a00108359en_us
+Streamlit docs:
+https://docs.streamlit.io/get-started/fundamentals/main-concepts
