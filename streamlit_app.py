@@ -33,6 +33,8 @@ def main():
 
     st.title("Interface Metrics")
     show_single_interface(db_name, table_name)
+
+    st.title("Rx & Tx Comparison")
     show_interface_bytes_comparison(db_name, table_name)    
 
 if __name__ == "__main__":
