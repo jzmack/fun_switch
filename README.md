@@ -6,6 +6,7 @@ This is a fun project aimed at learning more about the RESTful interactions with
 
 Since this is primarily for playing with an Aruba AOS-CX switch, one of those is needed. The one I'm using is a 12-port 6100 switch running version 10.13 code. If I feel like it, I may extend this to use Cisco switches as well, but that would be down the line
 
+- Linux - this was built on Debian
 - Python3.14 or later (probably works on earlier versions of Python but built with 3.14)
 - time and patience
 
@@ -37,6 +38,14 @@ Here's mine for example:
 ```sh
 */5 * * * * /home/jzm/workspace/fun_switch/fetch_data.sh
 ```
+
+Set up `.streamlit/` directory. This needs to contain a .toml file to access the SQLite database.
+
+```plain
+[connections.aos_cx_fun]
+url = "sqlite:///aos_cx_fun.db"
+```
+
 
 # Resources
 
