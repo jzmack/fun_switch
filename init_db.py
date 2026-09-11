@@ -24,6 +24,7 @@ def setup_db():
         """)
 
         conn.commit()
+        print(f"{DB_FILE} was created in local directory.")
 
 if __name__ == "__main__":
     setup_db()

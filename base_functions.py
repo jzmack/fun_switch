@@ -4,13 +4,13 @@ import json
 
 def login(ip_address:str, username: str, password:str) -> str:
 
-    # the 6100 uses a self-signed cert so it will throw SSL warnings    
+    # the 6100 uses a self-signed cert so it will throw SSL warnings
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
     # URL can change based on what version - this is v10.13
     login_url = f"https://{ip_address}/rest/v10.13/login?username={username}&password={password}"
 
-    
+
     headers = {
         "accept": "*/*",
         "x-use-csrf-token": "true"
@@ -42,14 +42,14 @@ def logout(ip_address:str, token:str):
     else:
         print("Logged out.")
 
-def create_auth_session(switch_ip:str, username:str, password:str) -> requests.Session:
+def create_auth_session(switch_ip:str, username:str, password:str):
     """This function returns an authenicated session with the AOS-CX switch using version 10.13."""
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
     session = requests.Session()
     login_data = {
         "username": username,
-        "password": password 
+        "password": password
     }
     login_response = session.post(f"https://{switch_ip}/rest/v10.13/login",data=login_data, verify=False)
 
@@ -57,7 +57,7 @@ def create_auth_session(switch_ip:str, username:str, password:str) -> requests.S
         login_response.raise_for_status()
         return
 
-    print(f"Successfully logged into {switch_ip} as {username}.")    
+    print(f"Successfully logged into {switch_ip} as {username}.")
     return session
 
 def get_data(session: requests.Session,
@@ -76,8 +76,8 @@ def get_data(session: requests.Session,
                            verify=False)
     if response.status_code != 200:
         response.raise_for_status()
-        return
-    json_data = json.loads(response.text)    
+        return {}
+    json_data = json.loads(response.text)
     return json_data
 
 def close_session(session:requests.Session, switch_ip:str):
@@ -89,6 +89,6 @@ def close_session(session:requests.Session, switch_ip:str):
 
     if logout_response.status_code !=200:
         logout_response.raise_for_status()
-    
+
     session.close()
     print("Logged out!")
