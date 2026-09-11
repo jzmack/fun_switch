@@ -25,7 +25,7 @@ EOF
 echo ".env file created with input provided."
 
 echo "Initializing database"
-./init_db_py
+./init_db.py
 
 echo "Setting up streamlit directory"
 mkdir .streamlit
