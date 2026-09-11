@@ -36,6 +36,5 @@ echo 'url="sqlite:///aos_cx_fun.db"' >> .streamlit/secrets.toml
 echo "Fetching initial data..."
 ./fetch_data.sh
 
-echo ""
-echo "All set up. Starting app..."
-streamlit run streamlit_app.py
+echo "When ready, start the app with the following command:
+echo "streamlit run streamlit_app.py"
