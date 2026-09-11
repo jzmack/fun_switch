@@ -30,7 +30,7 @@ echo "Initializing database"
 echo "Setting up streamlit directory"
 mkdir .streamlit
 echo "[connections.aos_cx_fun]" > .streamlit/secrets.toml
-echo 'url="sqlite///aos_cx_fun.db"' >> .streamlit/secrets.toml
+echo 'url="sqlite:///aos_cx_fun.db"' >> .streamlit/secrets.toml
 
 echo ""
 echo "All set up. Run the following to start the app."
