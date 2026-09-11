@@ -10,6 +10,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
+echo ""
 echo "Enter details to be saved in .env file"
 read -p "Enter switch IP: " switch_ip
 read -p "Enter switch API user: " switch_user
@@ -32,6 +33,9 @@ mkdir .streamlit
 echo "[connections.aos_cx_fun]" > .streamlit/secrets.toml
 echo 'url="sqlite:///aos_cx_fun.db"' >> .streamlit/secrets.toml
 
+echo "Fetching initial data..."
+./fetch_data.sh
+
 echo ""
-echo "All set up. Run the following to start the app."
-echo "streamlit run streamlit_app.py"
+echo "All set up. Starting app..."
+streamlit run streamlit_app.py
