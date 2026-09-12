@@ -48,8 +48,9 @@ url = "sqlite:///aos_cx_fun.db"
 
 # Todo
 
-- set up for easier debugging
+- set up logging for easier debugging
 - add new page on app for switch system info
+- need to add unit tests, at that point now
 
 # Resources
 

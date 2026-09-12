@@ -36,9 +36,6 @@ def parse_interface_data(interface_json:dict) -> list[dict]:
             total_bps, total_kbps, total_mbps = parse_rates(total_Bps)
             rx_bps, rx_kbps, rx_mbps = parse_rates(rx_Bps)
             tx_bps, tx_kbps, tx_mbps = parse_rates(tx_Bps)
-            print(round(total_Bps))
-            print(total_kbps)
-            print(total_mbps)
 
             stats_dict["interface"] = key
             stats_dict["description"] = description

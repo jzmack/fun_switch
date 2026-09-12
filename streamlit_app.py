@@ -3,10 +3,16 @@ import streamlit as st
 @st.fragment(run_every="5m")
 def show_single_interface(database_name:str, table_name:str):
     conn = st.connection(database_name, type="sql")
-    interfaces_df = conn.query(f"SELECT interface FROM {table_name}")
-    interface_set = set(interfaces_df['interface'])
+    interfaces_df = conn.query(f"SELECT DISTINCT interface, interface || ' - ' || description AS dropdown_label FROM {table_name};")
 
-    selected_interface = st.selectbox("Select Interface", interface_set)
+    label_mapping = dict(zip(interfaces_df["interface"], interfaces_df["dropdown_label"]))
+
+    selected_interface = st.selectbox(
+        "Select Interface",
+        options=interfaces_df["interface"],
+        format_func=lambda x: label_mapping[x]
+    )
+
     interface_df = conn.query(f"SELECT * FROM {table_name} WHERE interface = '{selected_interface}';",
                               ttl=300,
                               )
