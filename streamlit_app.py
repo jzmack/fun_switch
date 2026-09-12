@@ -1,6 +1,4 @@
 import streamlit as st
-import pandas as pd
-
 
 @st.fragment(run_every="5m")
 def show_single_interface(database_name:str, table_name:str):
@@ -10,9 +8,10 @@ def show_single_interface(database_name:str, table_name:str):
 
     selected_interface = st.selectbox("Select Interface", interface_set)
     interface_df = conn.query(f"SELECT * FROM {table_name} WHERE interface = '{selected_interface}';",
-                              ttl="5m",
+                              ttl=300,
                               )
-    st.line_chart(interface_df, y="Bps", x="timestamp")
+
+    st.line_chart(interface_df, y="total_kbps", x="timestamp")
     st.line_chart(interface_df, y="util_pct", x="timestamp", y_label="Utilization %", x_label="Time")
 
 @st.fragment(run_every="5m")
@@ -35,7 +34,7 @@ def main():
     show_single_interface(db_name, table_name)
 
     st.title("Rx & Tx Comparison")
-    show_interface_bytes_comparison(db_name, table_name)    
+    show_interface_bytes_comparison(db_name, table_name)
 
 if __name__ == "__main__":
     main()

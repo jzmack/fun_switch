@@ -46,6 +46,10 @@ Set up `.streamlit/` directory. This needs to contain a .toml file to access the
 url = "sqlite:///aos_cx_fun.db"
 ```
 
+# Todo
+
+- set up for easier debugging
+- add new page on app for switch system info
 
 # Resources
 
