@@ -1,5 +1,4 @@
 import streamlit as st
-import requests
 
 @st.fragment(run_every="5m")
 def show_single_interface(database_name:str, table_name:str):

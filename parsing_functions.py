@@ -1,4 +1,3 @@
-from this import s
 def parse_current_firmware(firmware_json:dict) -> str:
     return firmware_json["current_version"]
 
@@ -25,7 +24,7 @@ def parse_interface_data(interface_json:dict) -> list[dict]:
             print(f"no description found for {key}")
             continue
 
-        statistics = value.get("statistics")
+        statistics:dict = value.get("statistics")
         if not statistics:
             print(f"no statistics found for {key}-{value["description"]} ")
             continue
