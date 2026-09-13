@@ -1,5 +1,3 @@
-from curses import color_pair
-
 import streamlit as st
 
 @st.fragment(run_every="5m")
