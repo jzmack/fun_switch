@@ -1,3 +1,5 @@
+from curses import color_pair
+
 import streamlit as st
 
 @st.fragment(run_every="5m")
@@ -18,8 +20,25 @@ def show_single_interface(database_name:str, table_name:str):
                               ttl=300,
                               )
 
-    st.line_chart(interface_df, y=["rx_mbps", "tx_mbps"],y_label="mbps", x="timestamp")
-    st.line_chart(interface_df, y="util_pct", x="timestamp", y_label="Utilization %", x_label="Time")
+    st.title("Interface Utilization in mbps", text_alignment="left")
+    st.line_chart(
+        interface_df,
+        y=["rx_mbps", "tx_mbps"],
+        color=["#1AFF6F", "#9778FF"],
+        y_label="mbps",
+        x="timestamp",
+        x_label="Time"
+    )
+
+    st.title("Utilization %", text_alignment="left")
+    st.line_chart(
+        interface_df,
+        y="util_pct",
+        x="timestamp",
+        y_label="%",
+        x_label="Time",
+        color="#F2AAC7"
+    )
 
 @st.fragment(run_every="5m")
 def show_interface_bytes_comparison(database_name:str, table_name:str):
@@ -28,8 +47,17 @@ def show_interface_bytes_comparison(database_name:str, table_name:str):
     interface_set = set(interfaces_df['interface'])
     query_limit = len(interface_set)
 
-    total_interface_data_df = conn.query(f"SELECT interface, tx_bytes, rx_bytes FROM {table_name} ORDER BY timestamp DESC, tx_bytes ASC LIMIT {query_limit}")
-    st.bar_chart(total_interface_data_df, y=["tx_bytes", "rx_bytes"], x="interface", stack=False)
+    total_interface_data_df = conn.query(f"SELECT interface, tx_bytes_gb, rx_bytes_gb FROM {table_name} ORDER BY timestamp DESC, tx_bytes_gb ASC LIMIT {query_limit}")
+
+    st.title("Rx & Tx Comparison")
+    st.bar_chart(
+        total_interface_data_df,
+        y=["rx_bytes_gb", "tx_bytes_gb"],
+        x="interface",
+        y_label = "GB",
+        stack=False,
+        color=["#1AFF6F", "#9778FF"],
+    )
 
 
 def main():
@@ -37,10 +65,8 @@ def main():
     table_name = "interface_metrics"
     st.set_page_config(page_title="fun switch", layout="wide")
 
-    st.title("Interface Metrics")
     show_single_interface(db_name, table_name)
 
-    st.title("Rx & Tx Comparison")
     show_interface_bytes_comparison(db_name, table_name)
 
 if __name__ == "__main__":

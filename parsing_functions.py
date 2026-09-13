@@ -34,8 +34,8 @@ def parse_interface_data(interface_json:dict) -> list[dict]:
             print(f"rate statistics not in {key}.")
             continue
 
-        tx_bytes:int = value.get("tx_bytes", 0)
-        rx_bytes:int = value.get("rx_bytes", 0)
+        tx_bytes:int = statistics.get("tx_bytes", 0)
+        rx_bytes:int = statistics.get("rx_bytes", 0)
         tx_bytes_kb, tx_bytes_mb, tx_bytes_gb = parse_bytes(tx_bytes)
         rx_bytes_kb, rx_bytes_mb, rx_bytes_gb = parse_bytes(rx_bytes)
 
