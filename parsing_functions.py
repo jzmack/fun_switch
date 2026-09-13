@@ -1,3 +1,4 @@
+from this import s
 def parse_current_firmware(firmware_json:dict) -> str:
     return firmware_json["current_version"]
 
@@ -16,53 +17,59 @@ def parse_rates(Bytes_per_second:float) -> tuple[float, float, float]:
 def parse_interface_data(interface_json:dict) -> list[dict]:
     all_int_stats = [] # list of dicts
     for key, value in interface_json.items():
+
         stats_dict = {}
-        if value["description"] == None:
+
+        description = value.get("description")
+        if not description:
+            print(f"no description found for {key}")
             continue
-        elif value["statistics"] == {}:
+
+        statistics = value.get("statistics")
+        if not statistics:
+            print(f"no statistics found for {key}-{value["description"]} ")
             continue
-        elif value["rate_statistics"] == {}:
+
+        rate_statistics:dict = value.get("rate_statistics")
+        if not rate_statistics:
+            print(f"rate statistics not in {key}.")
             continue
-        else:
-            description:str = value["description"]
-            tx_bytes:int = value["statistics"]["tx_bytes"]
-            rx_bytes:int = value["statistics"]["rx_bytes"]
-            tx_bytes_kb, tx_bytes_mb, tx_bytes_gb = parse_bytes(tx_bytes)
-            rx_bytes_kb, rx_bytes_mb, rx_bytes_gb = parse_bytes(rx_bytes)
 
-            total_Bps:float = value["rate_statistics"]["bytes_per_second"]
-            rx_Bps:float = value["rate_statistics"]["rx_bytes_per_second"]
-            tx_Bps:float = value["rate_statistics"]["tx_bytes_per_second"]
-            total_bps, total_kbps, total_mbps = parse_rates(total_Bps)
-            rx_bps, rx_kbps, rx_mbps = parse_rates(rx_Bps)
-            tx_bps, tx_kbps, tx_mbps = parse_rates(tx_Bps)
+        tx_bytes:int = value.get("tx_bytes", 0)
+        rx_bytes:int = value.get("rx_bytes", 0)
+        tx_bytes_kb, tx_bytes_mb, tx_bytes_gb = parse_bytes(tx_bytes)
+        rx_bytes_kb, rx_bytes_mb, rx_bytes_gb = parse_bytes(rx_bytes)
 
-            stats_dict["interface"] = key
-            stats_dict["description"] = description
-            stats_dict["tx_bytes"] = tx_bytes
-            stats_dict["tx_bytes_kb"] = tx_bytes_kb
-            stats_dict["tx_bytes_mb"] = tx_bytes_mb
-            stats_dict["tx_bytes_gb"] = tx_bytes_gb
-            stats_dict["rx_bytes"] = rx_bytes
-            stats_dict["rx_bytes_kb"] = rx_bytes_kb
-            stats_dict["rx_bytes_mb"] = rx_bytes_mb
-            stats_dict["rx_bytes_gb"] = rx_bytes_gb
+        total_Bps: float = rate_statistics.get("bytes_per_second", 0.0)
+        rx_Bps:float = rate_statistics.get("rx_bytes_per_second", 0.0)
+        tx_Bps:float = rate_statistics.get("tx_bytes_per_second", 0.0)
+        total_bps, total_kbps, total_mbps = parse_rates(total_Bps)
+        rx_bps, rx_kbps, rx_mbps = parse_rates(rx_Bps)
+        tx_bps, tx_kbps, tx_mbps = parse_rates(tx_Bps)
 
-            stats_dict["total_Bps"] = round(total_Bps)
-            stats_dict["total_bps"] = total_bps
-            stats_dict["total_kbps"] = total_kbps
-            stats_dict["total_mbps"] = total_mbps
-            stats_dict["rx_bps"] = rx_bps
-            stats_dict["rx_kbps"] = rx_kbps
-            stats_dict["rx_mbps"] = rx_mbps
-            stats_dict["tx_bps"] = tx_bps
-            stats_dict["tx_kbps"] = tx_kbps
-            stats_dict["tx_mbps"] = tx_mbps
+        util_pct:float = value.get("utilization", 0.0)
 
-        if "utilization" not in value["rate_statistics"]:
-           stats_dict["util_pct"] = 0
-        else:
-            util_pct:float = value["rate_statistics"]["utilization"]
-            stats_dict["util_pct"] = round(util_pct, 2)
+        stats_dict["interface"] = key
+        stats_dict["description"] = description
+        stats_dict["tx_bytes"] = tx_bytes
+        stats_dict["tx_bytes_kb"] = tx_bytes_kb
+        stats_dict["tx_bytes_mb"] = tx_bytes_mb
+        stats_dict["tx_bytes_gb"] = tx_bytes_gb
+        stats_dict["rx_bytes"] = rx_bytes
+        stats_dict["rx_bytes_kb"] = rx_bytes_kb
+        stats_dict["rx_bytes_mb"] = rx_bytes_mb
+        stats_dict["rx_bytes_gb"] = rx_bytes_gb
+        stats_dict["total_Bps"] = round(total_Bps)
+        stats_dict["total_bps"] = total_bps
+        stats_dict["total_kbps"] = total_kbps
+        stats_dict["total_mbps"] = total_mbps
+        stats_dict["rx_bps"] = rx_bps
+        stats_dict["rx_kbps"] = rx_kbps
+        stats_dict["rx_mbps"] = rx_mbps
+        stats_dict["tx_bps"] = tx_bps
+        stats_dict["tx_kbps"] = tx_kbps
+        stats_dict["tx_mbps"] = tx_mbps
+        stats_dict["util_pct"] = util_pct
+
         all_int_stats.append(stats_dict)
     return all_int_stats

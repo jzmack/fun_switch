@@ -1,10 +1,12 @@
 import streamlit as st
+import requests
 
 @st.fragment(run_every="5m")
 def show_single_interface(database_name:str, table_name:str):
     conn = st.connection(database_name, type="sql")
     interfaces_df = conn.query(f"SELECT DISTINCT interface, interface || ' - ' || description AS dropdown_label FROM {table_name};")
 
+    # need a way to have pretty labels
     label_mapping = dict(zip(interfaces_df["interface"], interfaces_df["dropdown_label"]))
 
     selected_interface = st.selectbox(
@@ -17,7 +19,7 @@ def show_single_interface(database_name:str, table_name:str):
                               ttl=300,
                               )
 
-    st.line_chart(interface_df, y="total_kbps", x="timestamp")
+    st.line_chart(interface_df, y=["rx_mbps", "tx_mbps"],y_label="mbps", x="timestamp")
     st.line_chart(interface_df, y="util_pct", x="timestamp", y_label="Utilization %", x_label="Time")
 
 @st.fragment(run_every="5m")
