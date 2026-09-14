@@ -2,7 +2,7 @@ import sqlite3
 
 DB_FILE = "aos_cx_fun.db"
 
-def create_insert_statements(all_int_stats:list[dict]) -> list[str]:
+def create_interface_insert_statements(all_int_stats:list[dict]) -> list[str]:
     sql_insert_statements:list[str] = []
     # wrap the TEXT types(the VALUE for interface in this case) around single ' quotes
     for interface in all_int_stats:
@@ -58,6 +58,10 @@ def create_insert_statements(all_int_stats:list[dict]) -> list[str]:
         """
         sql_insert_statements.append(insert_statement)
     return sql_insert_statements
+
+def create_system_data_insert_statements(system_data:dict) -> list[str]:
+    system_data_inserts:list[str] = []
+    return system_data_inserts
 
 def send_inserts(insert_list:list[str]):
     with sqlite3.connect(DB_FILE) as conn:

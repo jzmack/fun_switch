@@ -16,7 +16,7 @@ def get_interface_data(session:requests.Session, switch_ip:str) -> dict:
     interface_data = get_data(session, switch_ip, interface_endpoint,headers=headers, params=params)
     return interface_data
 
-def get_system_info(session:requests.Session, switch_ip:str) -> dict:
+def get_system_data(session:requests.Session, switch_ip:str) -> dict:
     system_info_endpoint = "/system"
 
     params = {

@@ -5,10 +5,14 @@ def parse_system_uptime(boot_time:int) -> str:
     # all times are in seconds
     current_time = int(time.time())
     uptime = current_time - boot_time
-
     return humanize.precisedelta(uptime)
 
-
+def parse_system_data(system_data_json:dict) -> dict:
+    system_data = system_data_json.copy()
+    boot_time = system_data_json.get("boot_time", None)
+    uptime = parse_system_uptime(boot_time)
+    system_data["uptime"] = uptime
+    return system_data
 
 def parse_bytes(bytes:int) -> tuple[float, float, float]:
     bytes_kb = round(bytes / 1024, 2)
