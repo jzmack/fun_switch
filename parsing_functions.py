@@ -1,5 +1,14 @@
-def parse_current_firmware(firmware_json:dict) -> str:
-    return firmware_json["current_version"]
+import time
+import humanize
+
+def parse_system_uptime(boot_time:int) -> str:
+    # all times are in seconds
+    current_time = int(time.time())
+    uptime = current_time - boot_time
+
+    return humanize.precisedelta(uptime)
+
+
 
 def parse_bytes(bytes:int) -> tuple[float, float, float]:
     bytes_kb = round(bytes / 1024, 2)
