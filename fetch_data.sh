@@ -2,4 +2,4 @@
 
 cd /home/jzm/workspace/fun_switch
 source /home/jzm/workspace/fun_switch/.venv/bin/activate
-/home/jzm/workspace/fun_switch/main.py
+/home/jzm/workspace/fun_switch/gather_data.py

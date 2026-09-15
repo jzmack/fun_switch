@@ -72,13 +72,15 @@ def create_system_data_insert_statement(system_data:dict) -> str:
             boot_time,
             uptime,
             hostname,
-            software_version
+            software_version,
+            timestamp
         )
         VALUES (
             {boot_time},
             '{uptime}',
             '{hostname}',
-            '{software_version}'
+            '{software_version}',
+            datetime('now', 'localtime')
         );
     """
     return system_data_insert_statement

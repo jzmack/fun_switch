@@ -45,7 +45,8 @@ def setup_db():
             boot_time INTEGER,
             uptime TEXT,
             hostname TEXT,
-            software_version TEXT
+            software_version TEXT,
+            timestamp TEXT
             );
         """)
 
