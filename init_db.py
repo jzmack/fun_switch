@@ -39,6 +39,16 @@ def setup_db():
             );
         """)
 
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS system_data (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            boot_time INTEGER,
+            uptime TEXT,
+            hostname TEXT,
+            software_version TEXT
+            );
+        """)
+
         conn.commit()
         print(f"{DB_FILE} was created in local directory.")
 

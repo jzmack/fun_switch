@@ -1,3 +1,4 @@
+from ensurepip import bootstrap
 import sqlite3
 
 DB_FILE = "aos_cx_fun.db"
@@ -59,13 +60,38 @@ def create_interface_insert_statements(all_int_stats:list[dict]) -> list[str]:
         sql_insert_statements.append(insert_statement)
     return sql_insert_statements
 
-def create_system_data_insert_statements(system_data:dict) -> list[str]:
-    system_data_inserts:list[str] = []
-    return system_data_inserts
+def create_system_data_insert_statement(system_data:dict) -> str:
+
+    boot_time = system_data.get("boot_time", 0)
+    uptime = system_data.get("uptime", 0)
+    hostname = system_data.get("hostname", "No hostname")
+    software_version = system_data.get("software_version", "software_version not found")
+
+    system_data_insert_statement = f"""
+        INSERT INTO system_data (
+            boot_time,
+            uptime,
+            hostname,
+            software_version
+        )
+        VALUES (
+            {boot_time},
+            '{uptime}',
+            '{hostname}',
+            '{software_version}'
+        );
+    """
+    return system_data_insert_statement
 
 def send_inserts(insert_list:list[str]):
     with sqlite3.connect(DB_FILE) as conn:
         cursor = conn.cursor()
         for insert_statement in insert_list:
             cursor.execute(insert_statement)
+        conn.commit()
+
+def send_insert(insert_statement:str):
+    with sqlite3.connect(DB_FILE) as conn:
+        cursor = conn.cursor()
+        cursor.execute(insert_statement)
         conn.commit()

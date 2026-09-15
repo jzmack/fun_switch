@@ -4,7 +4,12 @@ from base_functions import create_auth_session, close_session
 from load_environment import load_environment
 from parsing_functions import  parse_interface_data, parse_system_data
 from custom_functions import get_interface_data, get_system_data
-from sql_functions import create_interface_insert_statements, send_inserts
+from sql_functions import(
+                    create_system_data_insert_statement,
+                    create_interface_insert_statements,
+                    send_inserts,
+                    send_insert
+                    )
 
 def main():
     SWITCH_IP, SWITCH_USER, SWITCH_PASS = load_environment()
@@ -18,7 +23,9 @@ def main():
 
         system_data = get_system_data(session, SWITCH_IP)
         parsed_system_data = parse_system_data(system_data)
-        print(parsed_system_data)
+
+        system_data_insert_statement = create_system_data_insert_statement(parsed_system_data)
+        send_insert(system_data_insert_statement)
 
     finally:
         close_session(session, SWITCH_IP)
