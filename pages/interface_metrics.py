@@ -1,8 +1,14 @@
 import streamlit as st
+from parsing_functions import get_cutoff_time
 
 @st.fragment(run_every="5m")
 def show_single_interface(database_name:str, table_name:str):
     conn = st.connection(database_name, type="sql")
+
+    time_frame_options = ["3h", "8h", "24h", "3d", "7d", "All"]
+    time_frame_selection = st.pills("timeframe", time_frame_options, selection_mode="single")
+    cutoff_time = get_cutoff_time(time_frame_selection)
+
     interfaces_df = conn.query(f"SELECT DISTINCT interface, interface || ' - ' || description AS dropdown_label FROM {table_name};")
 
     # need a way to have pretty labels
@@ -14,9 +20,14 @@ def show_single_interface(database_name:str, table_name:str):
         format_func=lambda x: label_mapping[x]
     )
 
-    interface_df = conn.query(f"SELECT * FROM {table_name} WHERE interface = '{selected_interface}';",
-                              ttl=300,
-                              )
+    if cutoff_time:
+        interface_df = conn.query(f"SELECT * FROM {table_name} WHERE interface = '{selected_interface}' AND timestamp >= '{cutoff_time}';",
+                                ttl=300,
+                                )
+    else:
+        interface_df = conn.query(f"SELECT * FROM {table_name} WHERE interface = '{selected_interface}';",
+                                ttl=300,
+                                )
 
     st.title("Interface Utilization in mbps", text_alignment="left")
     st.line_chart(

@@ -1,5 +1,22 @@
 import time
 import humanize
+from datetime import datetime, timedelta
+
+def get_cutoff_time(time_frame_selection):
+    """This function is for the pill selection"""
+    now = datetime.now()
+    if time_frame_selection == "3h":
+       return now - timedelta(hours=3)
+    elif time_frame_selection =="8h":
+        return now - timedelta(hours=8)
+    elif time_frame_selection == "24h":
+        return now - timedelta(hours=24)
+    elif time_frame_selection == "3d":
+        return now - timedelta(hours=72)
+    elif time_frame_selection == "7d":
+        return now - timedelta(days=7)
+    else:
+        return None
 
 def parse_system_uptime(boot_time:int) -> str:
     # all times are in seconds
