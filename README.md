@@ -46,6 +46,13 @@ Set up `.streamlit/` directory. This needs to contain a .toml file to access the
 url = "sqlite:///aos_cx_fun.db"
 ```
 
+To run the dashboard, from root of directory run:
+
+```sh
+source .venv/bin/activate
+streamlit run homepage.py
+```
+
 # Todo
 
 - set up bar chart labels

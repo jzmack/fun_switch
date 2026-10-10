@@ -1,4 +1,5 @@
 import streamlit as st
+from datetime import timedelta, datetime
 from parsing_functions import get_cutoff_time
 
 @st.fragment(run_every="5m")
@@ -24,7 +25,9 @@ def show_single_interface(database_name:str, table_name:str):
         interface_df = conn.query(f"SELECT * FROM {table_name} WHERE interface = '{selected_interface}' AND timestamp >= '{cutoff_time}';",
                                 ttl=300,
                                 )
-    else:
+    else: # show past 3hrs by default
+        now = datetime.now()
+        cutoff_time = now - timedelta(hours=3)
         interface_df = conn.query(f"SELECT * FROM {table_name} WHERE interface = '{selected_interface}';",
                                 ttl=300,
                                 )
